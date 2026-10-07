@@ -1,0 +1,203 @@
+@import 'lenis/dist/lenis.css';
+@import 'tailwindcss';
+
+/*
+  Climate Crisis YEAR axis runs from 1979 (solid) to 2050 (melted).
+  https://fonts.google.com/knowledge/glossary/year_axis
+*/
+@property --year {
+  syntax: '<number>';
+  inherits: true;
+  initial-value: 1979
+}
+
+@theme {
+  --color-acid: #f4fb00;
+  --color-ink: #08424b;
+  --color-paper: #f0f5e0;
+  --font-display: 'Climate Crisis', sans-serif;
+  --font-sans: 'Noto Sans', sans-serif;
+}
+
+:root {
+  --nav-h: 3.5rem;
+  --display-size: clamp(2.75rem, 11vw, 12rem);
+  --display-leading: 0.8;
+  --display-lines: 2;
+  --display-h: calc(var(--display-size) * var(--display-leading) * var(--display-lines));
+}
+
+html {
+  color: #e0f2f5;
+  background: var(--color-ink);
+}
+
+body {
+  margin: 0;
+  background: var(--color-ink);
+  color: var(--color-paper);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+}
+
+::selection {
+  background: var(--color-acid);
+  color: var(--color-ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-ink);
+  outline-offset: 3px;
+}
+
+.display-stack {
+  position: fixed;
+  z-index: 30;
+  /*top: var(--nav-h);
+  left: clamp(1rem, 3vw, 2.5rem);
+  right: clamp(1rem, 3vw, 2.5rem);*/
+  top: -1rem;
+  left: -1rem;
+  right: 0;
+  height: var(--display-h);
+  pointer-events: none;
+  transform: rotate(1deg);
+}
+
+.display-stack::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  top: calc(var(--nav-h) * -1);
+  right: calc(clamp(1rem, 3vw, 2.5rem) * -1);
+  bottom: -1.25rem;
+  left: calc(clamp(1rem, 3vw, 2.5rem) * -1);
+  background: linear-gradient(var(--color-ink) 50%, rgb(17 17 17 / 0));
+}
+
+.display-title {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 0;
+  color: var(--color-acid);
+  font-family: 'Climate Crisis', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-optical-sizing: auto;
+  font-size: var(--display-size);
+  line-height: var(--display-leading);
+  letter-spacing: 1px;
+  --year: 2050;
+  font-variation-settings: 'YEAR' var(--year);
+  text-transform: uppercase;
+}
+
+.display-title.is-current {
+  --year: 1979;
+  font-variation-settings: 'YEAR' var(--year);
+}
+
+.display-title:not(.is-current) {
+  opacity: 0;
+  visibility: hidden;
+}
+.display-font {
+  font-family: 'Climate Crisis', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-optical-sizing: auto;
+  line-height: 1;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.section {
+  min-height: 100vh;
+  padding: calc(var(--nav-h) + var(--display-h)) clamp(1rem, 3vw, 2.5rem) 5rem;
+}
+.site-nav-container {
+  /*overflow: hidden;*/
+  transform: rotate(-3deg);
+}
+.site-nav a {
+  position: relative;
+  padding: 0.5rem 2rem;
+  line-height: 1;
+  font-family: 'Climate Crisis', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  /*font-size: 2rem;*/
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: transform 0.2s ease-in-out;
+  transform-origin: bottom left;
+}
+.site-nav a:hover {
+  transform: rotate(1deg);
+}
+.site-nav a.is-active::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%) rotate(45deg);
+  left: -0.85rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  background: var(--color-ink);
+}
+
+.experience-list li {
+ border-bottom: 2px solid rgba(240, 245, 224, 0.3);
+}
+
+.portfolio-stack {
+  position: relative;
+}
+
+.portfolio-pin-locked {
+  box-sizing: border-box;
+}
+
+.quick-look {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.quick-look th,
+.quick-look td {
+  padding: 0.75rem;
+  vertical-align: center;
+  border-bottom: 2px solid var(--color-ink);
+}
+
+.quick-look th {
+  width: 5rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.url-btn {
+  position: absolute;
+  top: -2.5rem;
+  right: -2.5rem;
+  width: 5rem;
+  height: 5rem;
+  color: var(--color-acid);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  transition: transform 0.3s ease-in-out;
+  transform-origin: bottom left;
+}
+.url-btn:hover {
+  transform: rotate(3deg) scale(1.05);
+}
+@media (prefers-reduced-motion: reduce) {
+  .display-title,
+  .display-title.is-current {
+    --year: 1979;
+    font-variation-settings: 'YEAR' 1979;
+  }
+}

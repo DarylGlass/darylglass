@@ -18,7 +18,6 @@
   --font-display: 'Climate Crisis', sans-serif;
   --font-sans: 'Noto Sans', sans-serif;
 }
-
 :root {
   --nav-h: 3.5rem;
   --display-size: clamp(2.75rem, 11vw, 12rem);
@@ -29,7 +28,7 @@
 
 html {
   color: #e0f2f5;
-  background: var(--color-ink);
+  background: var(--color-ink); 
 }
 
 body {
